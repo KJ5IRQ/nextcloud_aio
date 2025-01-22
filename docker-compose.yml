@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    ports:
+      - "8080:80" # Access Nextcloud at http://your-server-ip:8080
+    volumes:
+      - ./nextcloud:/var/www/html # Persistent storage for Nextcloud
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=Willow1325!
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:latest
+    container_name: nextcloud-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=your_root_password
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=Willow1325!
+    volumes:
+      - ./db:/var/lib/mysql # Persistent storage for MariaDB
